@@ -1,7 +1,10 @@
 package com.jovezhao.nest.utils;
 
 import com.jovezhao.nest.exception.SystemException;
+import com.jovezhao.nest.log.Log;
+import com.jovezhao.nest.log.LogAdapter;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 
 import java.util.HashSet;
@@ -9,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class SpringUtils {
+    private static Log log=new LogAdapter(SpringUtils.class);
 
     private volatile static ApplicationContext applicationContext;
 
@@ -23,13 +27,21 @@ public class SpringUtils {
     }
 
     public static <T> T getInstance(Class<T> beanType, String bean) {
-
-        return getApplicationContext().getBean(bean, beanType);
-
+        try {
+            return getApplicationContext().getBean(bean, beanType);
+        } catch (NoSuchBeanDefinitionException ex) {
+            log.warn(ex);
+            return null;
+        }
     }
 
     public static <T> T getInstance(Class<T> beanType) {
-        return getApplicationContext().getBean(beanType);
+        try {
+            return getApplicationContext().getBean(beanType);
+        } catch (NoSuchBeanDefinitionException ex){
+            log.warn(ex);
+            return null;
+        }
     }
 
 

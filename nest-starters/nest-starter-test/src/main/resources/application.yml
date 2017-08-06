@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    name: huatuo
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/huatuo
+    username: root
+    password: Root1234
+    driver-class-name: com.mysql.jdbc.Driver
+    minIdle: 1
+    maxActive: 2
+    initialSize: 1
+    timeBetweenEvictionRunsMillis: 3000
+    minEvictableIdleTimeMillis: 300000
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+
+logging:
+  level:
+    root: info
+
+nest:
+  dubbo:
+    application:
+      name: nest-test
+    registry:
+        address: 192.168.31.10:2181
+        protocol: zookeeper

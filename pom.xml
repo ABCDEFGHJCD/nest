@@ -9,6 +9,13 @@
     <packaging>pom</packaging>
     <version>1.3.RELEASE</version>
 
+    <modules>
+        <module>nest-core</module>
+        <module>nest-ddd</module>
+        <module>nest-plugins</module>
+        <module>nest-starters</module>
+    </modules>
+
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>nest framework</description>
@@ -38,13 +45,7 @@
         </developerConnection>
         <url>https://github.com/jovezhao/nest</url>
     </scm>
-    <modules>
-        <module>nest-core</module>
-        <module>nest-ddd</module>
-        <module>nest-plugins</module>
-        <module>nest-starter</module>
-        <module>nest-starter-test</module>
-    </modules>
+
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
