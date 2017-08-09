@@ -1,5 +1,7 @@
 package com.ywkj.nest.ddd;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -33,6 +35,7 @@ public abstract class AbstractUnitOfWork implements IUnitOfWork {
 
     protected abstract void beforeCommit();
 
+    @Transactional
     public void commit() {
 
         beforeCommit();
@@ -55,7 +58,6 @@ public abstract class AbstractUnitOfWork implements IUnitOfWork {
                 }
             }
         } catch (Exception ex) {
-
             rollback();
             throw ex;
         }finally {

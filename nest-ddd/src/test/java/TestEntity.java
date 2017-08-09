@@ -19,3 +19,4 @@ public class TestEntity extends EntityObject {
         entity.toString();
     }
 }
+
