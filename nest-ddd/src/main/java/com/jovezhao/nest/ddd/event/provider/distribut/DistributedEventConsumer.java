@@ -32,7 +32,7 @@ public abstract class DistributedEventConsumer<T extends ProviderConfig> extends
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                log.warn(e);
+                log.warn(e.getMessage(), e);
             }
 
         }

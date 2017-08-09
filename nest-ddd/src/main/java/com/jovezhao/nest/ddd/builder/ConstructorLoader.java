@@ -7,10 +7,10 @@ import com.jovezhao.nest.ddd.Identifier;
  * 无中生有类实体的构建
  * @param <T>
  */
-public class FromScratchLoader<T extends BaseEntityObject> implements EntityLoader<T> {
+public class ConstructorLoader<T extends BaseEntityObject> implements EntityLoader<T> {
     private Class<T> tClass;
 
-    public FromScratchLoader(Class<T> tClass) {
+    public ConstructorLoader(Class<T> tClass) {
         this.tClass = tClass;
     }
 
@@ -27,4 +27,5 @@ public class FromScratchLoader<T extends BaseEntityObject> implements EntityLoad
         u.setId(id);
         return u;
     }
+
 }

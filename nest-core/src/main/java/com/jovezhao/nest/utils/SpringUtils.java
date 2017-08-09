@@ -30,7 +30,7 @@ public class SpringUtils {
         try {
             return getApplicationContext().getBean(bean, beanType);
         } catch (NoSuchBeanDefinitionException ex) {
-            log.warn(ex);
+            log.warn("加载bean失败",ex);
             return null;
         }
     }
@@ -39,7 +39,7 @@ public class SpringUtils {
         try {
             return getApplicationContext().getBean(beanType);
         } catch (NoSuchBeanDefinitionException ex){
-            log.warn(ex);
+            log.warn("加载bean失败",ex);
             return null;
         }
     }

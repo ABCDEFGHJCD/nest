@@ -1,5 +1,7 @@
 package com.jovezhao.nest.mapper;
 
+import com.jovezhao.nest.log.Log;
+import com.jovezhao.nest.log.LogAdapter;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.core.io.Resource;
@@ -15,14 +17,20 @@ import java.util.List;
  */
 public class NestMapper {
 
+    private Log logger = new LogAdapter(NestMapper.class);
     private DozerBeanMapper mapper;
 
-    public void setMappingFiles(Resource[] mappingFiles) throws IOException {
+    public void setMappingFiles(Resource... mappingFiles) {
         if (mappingFiles != null) {
             ArrayList mappings = new ArrayList(mappingFiles.length);
             for (Resource mappingFile : mappingFiles) {
-                URL url = mappingFile.getURL();
-                mappings.add(url.toString());
+                URL url = null;
+                try {
+                    url = mappingFile.getURL();
+                    mappings.add(url.toString());
+                } catch (IOException e) {
+                    logger.warn("加载资源失败", e);
+                }
             }
 
             mapper.setMappingFiles(mappings);
