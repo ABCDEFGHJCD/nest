@@ -1,5 +1,6 @@
 package com.jovezhao.nest.starter;
 
+import com.jovezhao.nest.ddd.StringIdentifierConverter;
 import com.jovezhao.nest.ddd.repository.IUnitOfWork;
 import com.jovezhao.nest.ddd.repository.NestAspect;
 import com.jovezhao.nest.ddd.repository.NestUnitOfWork;
@@ -32,9 +33,10 @@ public class NestAutoConfiguration {
     }
 
     @Bean
-    public NestMapper getNestMapper(){
+    public NestMapper getNestMapper() {
         NestMapper nestMapper = new NestMapper();
-        nestMapper.setMappingFiles(new ClassPathResource("classpath:nest-mapper.xml"));
+        nestMapper.setMappingFiles(new ClassPathResource("nest-mapper.xml"));
+//        nestMapper.setCustomConverters(new StringIdentifierConverter());
         return nestMapper;
     }
 }

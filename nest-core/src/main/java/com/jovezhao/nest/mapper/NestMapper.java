@@ -2,6 +2,7 @@ package com.jovezhao.nest.mapper;
 
 import com.jovezhao.nest.log.Log;
 import com.jovezhao.nest.log.LogAdapter;
+import org.dozer.CustomConverter;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.core.io.Resource;
@@ -9,6 +10,7 @@ import org.springframework.core.io.Resource;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,6 +37,11 @@ public class NestMapper {
 
             mapper.setMappingFiles(mappings);
         }
+    }
+
+    public void setCustomConverters(CustomConverter... customConverters) {
+
+        mapper.setCustomConverters(Arrays.asList(customConverters));
     }
 
     public NestMapper() {
