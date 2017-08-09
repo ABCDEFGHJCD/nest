@@ -38,7 +38,7 @@ public class ActiveMQEventConsumer extends DistributedEventConsumer<ActiveMQProv
             textMessage.acknowledge();
         } catch (Exception ex) {
             //处理handler时发生异常，记录警告类日志
-            log.warn(ex);
+            log.warn("处理handler时发生异常",ex);
         } finally {
             consumer.close();
             session.close();
