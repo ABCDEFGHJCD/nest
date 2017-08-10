@@ -2,6 +2,8 @@ package com.jovezhao.nest.ddd.builder;
 
 import com.jovezhao.nest.ddd.BaseEntityObject;
 import com.jovezhao.nest.exception.SystemException;
+import com.jovezhao.nest.log.Log;
+import com.jovezhao.nest.log.LogAdapter;
 import org.springframework.cglib.proxy.Enhancer;
 
 import java.lang.reflect.Field;
@@ -11,7 +13,9 @@ import java.util.function.Consumer;
  * 实体工具
  * Created by Jove on 2017/1/9.
  */
-class EntityObjectUtils {
+public class EntityObjectUtils {
+    static Log log = new LogAdapter(EntityObjectUtils.class);
+
     /**
      * 使用cglib创建一个被代理的实体
      * 代理的主要作用用于监测自身属性变化时将自身提交到工作单元等待持久化
@@ -38,6 +42,16 @@ class EntityObjectUtils {
             return (T) enhancer.create();
         else
             return (T) enhancer.create(constructorArgTypes, constructorArgs);
+    }
+
+    public static void setValue(Class clazz, BaseEntityObject entityObject, String fieldName, Object value) {
+        try {
+            Field declaredField = clazz.getDeclaredField(fieldName);
+            declaredField.setAccessible(true);
+            declaredField.set(entityObject, value);
+        } catch (Exception ex) {
+            log.warn("设置属性失败", ex);
+        }
     }
 
 

@@ -10,6 +10,7 @@ import com.jovezhao.nest.utils.SpringUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -50,15 +51,15 @@ public abstract class BaseEntityObject<T extends Identifier> implements Serializ
 
         T t = null;
 
-            if (!StringUtils.isEmpty(roleId)) {
-                t = new RepositoryLoader<>(clazz).create(roleId);
-            } else {
-                roleId = IdGenerator.getInstance().generate(clazz);
-            }
-            if (t == null) {
-                t = new ConstructLoader<>(clazz).create(roleId);
-            }
-            t.setActor(this);
+        if (!StringUtils.isEmpty(roleId)) {
+            t = new RepositoryLoader<>(clazz).create(roleId);
+        } else {
+            roleId = IdGenerator.getInstance().generate(clazz);
+        }
+        if (t == null) {
+            t = new ConstructLoader<>(clazz).create(roleId);
+        }
+        t.setActor(this);
 
 
         return t;
@@ -78,12 +79,13 @@ public abstract class BaseEntityObject<T extends Identifier> implements Serializ
 
     /**
      * 获取一个默认的角色，如果仓储中不存在这个角色时将创建一个角色
+     *
      * @param tClass
      * @param <T>
      * @return
      */
     public <T extends BaseRole> T act(Class<T> tClass) {
-        return act(tClass,this.getId());
+        return act(tClass, this.getId());
     }
 
     private void addToUnitOfWork() {
@@ -97,5 +99,9 @@ public abstract class BaseEntityObject<T extends Identifier> implements Serializ
         IUnitOfWork unitOfWork = SpringUtils.getInstance(IUnitOfWork.class);
         if (unitOfWork != null)
             unitOfWork.removeEntityObject(this);
+    }
+
+    public void setInitValue(String fieldName, Object value) {
+
     }
 }
