@@ -4,8 +4,8 @@ import com.jovezhao.nest.exception.SystemException;
 import com.jovezhao.nest.log.Log;
 import com.jovezhao.nest.log.LogAdapter;
 import com.jovezhao.nest.utils.SpringUtils;
-import org.apache.commons.collections.map.HashedMap;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,7 +13,7 @@ import java.util.Set;
  * Created by zhaofujun on 2017/6/20.
  */
 public class CacheItemManager {
-    private static Map<String, CacheItem> itemMap = new HashedMap();
+    private static Map<String, CacheItem> itemMap = new HashMap<>();
     private static final String defaultCode = "default";
     private static Log logger = new LogAdapter(CacheItemManager.class);
 

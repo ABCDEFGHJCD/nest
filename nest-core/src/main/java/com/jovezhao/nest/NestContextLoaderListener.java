@@ -14,6 +14,7 @@ public class NestContextLoaderListener extends ContextLoaderListener {
     public WebApplicationContext initWebApplicationContext(ServletContext servletContext) {
         WebApplicationContext webApplicationContext= super.initWebApplicationContext(servletContext);
         SpringUtils.setApplicationContext(webApplicationContext);
+
         return webApplicationContext;
     }
 }

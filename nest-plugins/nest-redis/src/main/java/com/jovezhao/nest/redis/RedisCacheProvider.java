@@ -3,7 +3,6 @@ package com.jovezhao.nest.redis;
 import com.jovezhao.nest.cache.ICacheProvider;
 import com.jovezhao.nest.utils.JsonUtils;
 import com.jovezhao.nest.utils.StringUtils;
-import org.apache.commons.collections.map.HashedMap;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -40,7 +39,7 @@ public class RedisCacheProvider implements ICacheProvider {
 
     @Override
     public Map<String, Object> get(String groupName, Class clazz, String... keys) {
-        Map<String, Object> result = new HashedMap();
+        Map<String, Object> result = new HashMap<>();
         Jedis jedis = jedisPool.getResource();
         for (String key : keys) {
             if (containsKey(groupName, key, jedis))

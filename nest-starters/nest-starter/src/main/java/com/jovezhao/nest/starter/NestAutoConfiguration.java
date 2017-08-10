@@ -1,15 +1,12 @@
 package com.jovezhao.nest.starter;
 
-import com.jovezhao.nest.ddd.StringIdentifierConverter;
 import com.jovezhao.nest.ddd.repository.IUnitOfWork;
 import com.jovezhao.nest.ddd.repository.NestAspect;
 import com.jovezhao.nest.ddd.repository.NestUnitOfWork;
-import com.jovezhao.nest.mapper.NestMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -32,11 +29,5 @@ public class NestAutoConfiguration {
         return new NestAspect();
     }
 
-    @Bean
-    public NestMapper getNestMapper() {
-        NestMapper nestMapper = new NestMapper();
-        nestMapper.setMappingFiles(new ClassPathResource("nest-mapper.xml"));
-//        nestMapper.setCustomConverters(new StringIdentifierConverter());
-        return nestMapper;
-    }
+
 }

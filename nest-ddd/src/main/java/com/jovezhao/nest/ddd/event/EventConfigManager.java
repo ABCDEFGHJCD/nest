@@ -2,8 +2,8 @@ package com.jovezhao.nest.ddd.event;
 
 import com.jovezhao.nest.ddd.event.provider.dft.DefaultEventChannelProvider;
 import com.jovezhao.nest.utils.SpringUtils;
-import org.apache.commons.collections.map.HashedMap;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,7 +13,7 @@ import java.util.Set;
  */
 public class EventConfigManager {
 
-    private static Map<String, EventConfigItem> itemMap = new HashedMap();
+    private static Map<String, EventConfigItem> itemMap = new HashMap<>();
     private static final String defaultCode = "default";
 
     static {
