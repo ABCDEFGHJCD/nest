@@ -35,7 +35,6 @@ public abstract class AbstractUnitOfWork implements IUnitOfWork {
 
     protected abstract void beforeCommit();
 
-    @Transactional
     public void commit() {
 
         beforeCommit();
