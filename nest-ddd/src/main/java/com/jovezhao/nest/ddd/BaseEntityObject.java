@@ -2,6 +2,7 @@ package com.jovezhao.nest.ddd;
 
 import com.jovezhao.nest.ddd.builder.ConstructLoader;
 import com.jovezhao.nest.ddd.builder.RepositoryLoader;
+import com.jovezhao.nest.ddd.exception.EmptyException;
 import com.jovezhao.nest.ddd.identifier.IdGenerator;
 import com.jovezhao.nest.ddd.repository.IRoleRepository;
 import com.jovezhao.nest.ddd.repository.IUnitOfWork;
@@ -38,31 +39,45 @@ public abstract class BaseEntityObject<T extends Identifier> implements Serializ
     }
 
     /**
-     * 将自己扮演成一个具体的角色以执行一个操作
-     * 如果roleid为空时，将创建一个新的角色信息
-     * 如果指定的roleid在仓储中不存在，将新建一个角色供他使用
+     * 指定一个角色编号来扮演一个角色
      *
      * @param clazz  要扮演的角色的类型
      * @param roleId 如果不为空将通过仓储加载一个数据对象
      * @param <T>
      * @return
      */
-    public <T extends BaseRole> T act(Class<T> clazz, Identifier roleId) {
+    public <T extends BaseRole> T act(Class<T> clazz, Identifier roleId, boolean createByNotfound) {
 
-        T t = null;
+        if (roleId == null)
+            throw new EmptyException("roleId为空，不能扮演角色");
+        T t = new RepositoryLoader<>(clazz).create(roleId);
 
-        if (!StringUtils.isEmpty(roleId)) {
+        if (t == null && createByNotfound) {
+            //没有找到时创建一个角色
             t = new RepositoryLoader<>(clazz).create(roleId);
-        } else {
-            roleId = IdGenerator.getInstance().generate(clazz);
         }
-        if (t == null) {
-            t = new ConstructLoader<>(clazz).create(roleId);
-        }
-        t.setActor(this);
 
-
+        if (t != null)
+            t.setActor(this);
         return t;
+
+    }
+
+    /**
+     * 扮演一个角色，使用演员的编号
+     *
+     * @param tClass
+     * @param <T>
+     * @return
+     */
+    public <T extends BaseRole> T act(Class<T> tClass, boolean createByNotfound) {
+        return act(tClass, this.getId(), createByNotfound);
+    }
+
+    private void addToUnitOfWork() {
+        IUnitOfWork unitOfWork = SpringUtils.getInstance(IUnitOfWork.class);
+        if (unitOfWork != null)
+            unitOfWork.addEntityObject(this);
     }
 
     public <T extends BaseRole> Set<T> findRoles(Class<T> clazz) {
@@ -71,27 +86,10 @@ public abstract class BaseEntityObject<T extends Identifier> implements Serializ
         Set<Identifier> ids = repository.getRoleIds(this.id);
         Set<T> tSet = new HashSet<>();
         for (Identifier id : ids) {
-            T t = this.act(clazz, id);
+            T t = this.act(clazz, id, false);
             tSet.add(t);
         }
         return tSet;
-    }
-
-    /**
-     * 获取一个默认的角色，如果仓储中不存在这个角色时将创建一个角色
-     *
-     * @param tClass
-     * @param <T>
-     * @return
-     */
-    public <T extends BaseRole> T act(Class<T> tClass) {
-        return act(tClass, this.getId());
-    }
-
-    private void addToUnitOfWork() {
-        IUnitOfWork unitOfWork = SpringUtils.getInstance(IUnitOfWork.class);
-        if (unitOfWork != null)
-            unitOfWork.addEntityObject(this);
     }
 
 
