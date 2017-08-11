@@ -1,6 +1,5 @@
 package com.ywkj.nest.ddd;
 
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,10 +15,10 @@ public abstract class AbstractUnitOfWork implements IUnitOfWork {
     private static ThreadLocal<HashMap<EntityObject, OperateEnum>> threadLocal = new ThreadLocal<>();
 
 
-    private HashMap<EntityObject, OperateEnum> getmap(){
-        HashMap<EntityObject, OperateEnum> hashMap=threadLocal.get();
-        if(threadLocal.get()==null){
-            hashMap=new HashMap<>();
+    private HashMap<EntityObject, OperateEnum> getmap() {
+        HashMap<EntityObject, OperateEnum> hashMap = threadLocal.get();
+        if (threadLocal.get() == null) {
+            hashMap = new HashMap<>();
             threadLocal.set(hashMap);
         }
         return hashMap;
@@ -59,7 +58,7 @@ public abstract class AbstractUnitOfWork implements IUnitOfWork {
         } catch (Exception ex) {
             rollback();
             throw ex;
-        }finally {
+        } finally {
             getmap().clear();
             afterCommit();
         }
