@@ -1,6 +1,10 @@
 package com.jovezhao.nest.ddd;
 
 public class StringIdentifier extends Identifier {
+    public static StringIdentifier valueOf(String id) {
+        return new StringIdentifier(id);
+    }
+
     private String id;
 
     public StringIdentifier(String id) {

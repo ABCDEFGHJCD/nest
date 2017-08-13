@@ -54,7 +54,7 @@ public abstract class BaseEntityObject<T extends Identifier> implements Serializ
 
         if (t == null && createByNotfound) {
             //没有找到时创建一个角色
-            t = new RepositoryLoader<>(clazz).create(roleId);
+            t = new ConstructLoader<>(clazz).create(roleId);
         }
 
         if (t != null)

@@ -8,12 +8,17 @@ import com.jovezhao.nest.dubbo.DubboResource;
 import com.jovezhao.nest.dubbo.EnableDubbo;
 import com.jovezhao.nest.test.api.UserService;
 import com.jovezhao.nest.test.appservices.UserServiceImpl;
+import org.dozer.DozerBeanMapper;
+import org.dozer.spring.DozerBeanMapperFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 import javax.annotation.Resource;
 
@@ -23,18 +28,21 @@ import javax.annotation.Resource;
 
 @SpringBootApplication
 @MapperScan("com.jovezhao.nest.test.repositories.mappers")
-@EnableDubbo
-public class Application {
+public class Application implements CommandLineRunner {
 
 
+    @Bean
+    public DozerBeanMapperFactoryBean dozer() {
+        return new DozerBeanMapperFactoryBean();
+    }
 
     public static void main(String[] args) {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(Application.class, args);
 
-        ApplicationConfig applicationConfig = applicationContext.getBean(ApplicationConfig.class);
-        RegistryConfig registryConfig = applicationContext.getBean(RegistryConfig.class);
-        ProtocolConfig protocolConfig = applicationContext.getBean(ProtocolConfig.class);
-
+//        ApplicationConfig applicationConfig = applicationContext.getBean(ApplicationConfig.class);
+//        RegistryConfig registryConfig = applicationContext.getBean(RegistryConfig.class);
+//        ProtocolConfig protocolConfig = applicationContext.getBean(ProtocolConfig.class);
+//
 
 //        ServiceConfig serviceConfig = new ServiceConfig();
 //        serviceConfig.setApplication(applicationConfig);
@@ -47,4 +55,11 @@ public class Application {
 //        serviceConfig.export();
     }
 
+    @Autowired
+    private DozerBeanMapper beanMapper;
+
+    @Override
+    public void run(String... args) throws Exception {
+
+    }
 }

@@ -1,5 +1,6 @@
 package com.jovezhao.nest.mybatis;
 
+import com.jovezhao.nest.PageList;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;

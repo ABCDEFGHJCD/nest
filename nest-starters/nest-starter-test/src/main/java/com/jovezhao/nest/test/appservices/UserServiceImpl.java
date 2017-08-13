@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
         User user = builder.create(new StringIdentifier("aaa"));
         user.setName(name);
 
-        Teacher teacher = user.act(Teacher.class, new StringIdentifier("tttt"));
+        Teacher teacher = user.act(Teacher.class, new StringIdentifier("tttt"),false);
         teacher.setClassName("className");
 
         for (int i = 0; i < 100; i++) {
