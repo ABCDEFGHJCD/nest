@@ -27,10 +27,34 @@ public class StringUtils {
 
         Pattern p_space = Pattern.compile(regEx_space, Pattern.CASE_INSENSITIVE);
         Matcher m_space = p_space.matcher(htmlStr);
-        htmlStr = m_space.replaceAll("").replaceAll("&nbsp;",""); // 过滤空格回车标签
+        htmlStr = m_space.replaceAll("").replaceAll("&nbsp;", ""); // 过滤空格回车标签
         return htmlStr.trim(); // 返回文本字符串
     }
-    public static boolean isEmpty(String str){
+
+    public static boolean isEmpty(String str) {
         return org.springframework.util.StringUtils.isEmpty(str);
     }
+
+    public static boolean isEmail(String str) {
+        Pattern pattern = Pattern.compile("[\\w]*@([\\w]+\\.)+\\w{2,}");
+        Matcher matcher = pattern.matcher(str);
+        if (matcher.matches()) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isPhone(String str) {
+        Pattern pattern = Pattern.compile("^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$");
+        Matcher matcher = pattern.matcher(str);
+        if (matcher.matches()) {
+            return true;
+        }
+        return false;
+    }
+
+//    public static void main(String[] args) {
+//        String s="13322233321";
+//        boolean email = isPhone(s);
+//    }
 }
